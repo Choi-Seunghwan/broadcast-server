@@ -1,9 +1,23 @@
-import express from "express";
-import io from "socket.io";
+const app = require("express")();
+const http = require("http").createServer(app);
+const io = require('socket.io')(http);
 
-const app = express();
+app.get("/", function(req, res) {
+  res.send("<h1>Hello socket</h1>");
+});
 
+io.on('connection', (socket) => {
+  console.log('a user connected');
 
-const server = app.listen(3005, () => {
-  console.log("express server has started on port 3005");
+  socket.on('chat message', () => {
+    console.log('message: ' + msg);
+  })
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  })
+})
+
+http.listen(3000, function() {
+  console.log('listen : 3000');
 });
