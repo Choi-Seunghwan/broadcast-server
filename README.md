@@ -19,6 +19,6 @@
 - User ID
 - Content (내용)
 - Type ?? (공지, 일반 챗 등..?)
-- Time
+- Create Time
 
 ###
