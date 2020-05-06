@@ -1,6 +1,9 @@
-const app = require('express')();
+import express from 'express';
+
+const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+const port = 3002;
 
 let count = 0;
 
@@ -11,7 +14,7 @@ app.get('/', function (req, res) {
 io.on('connection', (socket) => {
   console.log('a user connected');
 
-  socket.on('chat', () => {
+  socket.on('chat', (msg) => {
     console.log('message: ' + msg);
   });
 
@@ -26,6 +29,6 @@ io.on('connection', (socket) => {
   }, 1000);
 });
 
-http.listen(3002, function () {
-  console.log('listen : 3002');
+http.listen(port, function () {
+  console.log(`listen : ${port}`);
 });
