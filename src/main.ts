@@ -32,3 +32,6 @@ io.on('connection', (socket) => {
 http.listen(port, function () {
   console.log(`listen : ${port}`);
 });
+
+
+module.exports = {app}
