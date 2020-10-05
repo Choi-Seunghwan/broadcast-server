@@ -5,7 +5,9 @@
     "target": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "./dist"
   },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts"],
   "lib": ["es2015"]
 }
