@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import socketIO, { Server as SocketIOServer } from 'socket.io';
 import { createServer, Server as HTTPServer } from 'http';
+import messageHandler from './controller/messageHandler';
 
 export class Server {
   private httpServer: HTTPServer;
@@ -32,47 +33,7 @@ export class Server {
 
   private handleSocketConnection(): void {
     this.io.on('connection', (socket) => {
-      console.log('hello connection');
-      const existingSocket = this.activeSockets.find((existingSocket) => existingSocket === socket.id);
-
-      if (!existingSocket) {
-        this.activeSockets.push(socket.id);
-
-        socket.emit('update-user-list', {
-          users: this.activeSockets.filter((existingSocket) => existingSocket !== socket.id),
-        });
-
-        socket.broadcast.emit('update-user-list', {
-          users: [socket.id],
-        });
-      }
-
-      socket.on('call-user', (data: any) => {
-        socket.to(data.to).emit('call-made', {
-          offer: data.offer,
-          socket: socket.id,
-        });
-      });
-
-      socket.on('make-answer', (data) => {
-        socket.to(data.to).emit('answer-made', {
-          socket: socket.id,
-          answer: data.answer,
-        });
-      });
-
-      socket.on('reject-call', (data) => {
-        socket.to(data.from).emit('call-rejected', {
-          socket: socket.id,
-        });
-      });
-
-      socket.on('disconnect', () => {
-        this.activeSockets = this.activeSockets.filter((existingSocket) => existingSocket !== socket.id);
-        socket.broadcast.emit('remove-user', {
-          socketId: socket.id,
-        });
-      });
+      messageHandler(this, socket);
     });
   }
 
