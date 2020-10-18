@@ -1,5 +1,13 @@
 export default (server, socket) => {
-  console.log('hello connection');
+
+
+  switch(socket){ // check message name and split
+    case
+      break
+     ... // room , account.. 
+  }
+
+
   const existingSocket = server.activeSockets.find((existingSocket) => existingSocket === socket.id);
 
   if (!existingSocket) {
