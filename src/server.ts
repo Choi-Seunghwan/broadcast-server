@@ -1,7 +1,10 @@
 import express, { Application } from 'express';
 import socketIO, { Server as SocketIOServer } from 'socket.io';
 import { createServer, Server as HTTPServer } from 'http';
-import messageHandler from './controller/messageHandler';
+import cors from 'cors';
+import messageHandler from './webSocket/messageHandler';
+import api from './api';
+import middlewares from './api/middleware';
 
 export class Server {
   private httpServer: HTTPServer;
@@ -26,9 +29,9 @@ export class Server {
   }
 
   private handleRoutes(): void {
-    this.app.get('/', (req, res) => {
-      res.send(`<h1>Hello World</h1>`);
-    });
+    this.app.use(cors());
+    this.app.use('/', middlewares);
+    this.app.use('/api', api);
   }
 
   private handleSocketConnection(): void {
