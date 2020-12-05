@@ -5,9 +5,13 @@
     "target": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.test.ts"],
-  "lib": ["es2015"]
+  "lib": ["es2016"]
 }
