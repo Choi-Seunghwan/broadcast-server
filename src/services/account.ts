@@ -1,3 +1,7 @@
-class Account {}
+class Account {
+  constructor() {}
 
-export default new Account();
+  createGuestNickname() {}
+}
+
+export default Account;

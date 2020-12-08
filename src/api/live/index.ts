@@ -1,4 +1,4 @@
-import controller from './room.controller';
+import controller from './live.controller';
 import express from 'express';
 
 const router = express.Router();

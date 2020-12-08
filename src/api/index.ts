@@ -1,8 +1,10 @@
 import express from 'express';
-import room from './room';
+import account from './account';
+import live from './live';
 
 const router = express.Router();
 
-router.use('/room', room);
+router.use('/account', account);
+router.use('/live', live);
 
 export default router;

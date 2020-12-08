@@ -5,15 +5,19 @@ import cors from 'cors';
 import messageHandler from './webSocket/messageHandler';
 import api from './api';
 import middlewares from './api/middleware';
+import Live from '@/services/live';
+import Account from '@/services/account';
 
 export class Server {
   private httpServer: HTTPServer;
   private app: Application;
   private io: SocketIOServer;
+  private readonly DEFAULT_PORT = 5000;
 
   private activeSockets: string[] = [];
 
-  private readonly DEFAULT_PORT = 5000;
+  private accountService: Account;
+  private liveService: Live;
 
   constructor() {
     this.initialize();
@@ -26,6 +30,9 @@ export class Server {
     this.app = express();
     this.httpServer = createServer(this.app);
     this.io = socketIO(this.httpServer);
+
+    this.accountService = new Account();
+    this.liveService = new Live();
   }
 
   private handleRoutes(): void {

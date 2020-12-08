@@ -1,5 +1,9 @@
 class Live {
+  roomList: any[] = [];
+
   constructor() {}
+
+  // createRoom();
 }
 
-export default new Live();
+export default Live;
