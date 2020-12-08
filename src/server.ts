@@ -22,8 +22,8 @@ export class Server {
   constructor() {
     this.initialize();
 
-    this.handleRoutes();
-    this.handleSocketConnection();
+    this.handleAPI();
+    this.handleWebSocket();
   }
 
   private initialize(): void {
@@ -35,18 +35,26 @@ export class Server {
     this.liveService = new Live();
   }
 
-  private handleRoutes(): void {
+  private handleAPI(): void {
     this.app.use(cors());
     this.app.use('/', middlewares);
     this.app.use('/api', api);
   }
 
-  private handleSocketConnection(): void {
+  private handleWebSocket(): void {
     this.io.on('connection', (socket) => {
       socket.on('message', (method, params) => {
         messageHandler(this, method, params);
       });
     });
+  }
+
+  public connectLiveService(): Live {
+    return this.liveService;
+  }
+
+  public connectAccountService(): Account {
+    return this.accountService;
   }
 
   public listen(callback: (port: number) => void): void {

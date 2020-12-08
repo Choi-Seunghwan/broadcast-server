@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es6",
+    "target": "ES2019",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "./dist",
@@ -12,6 +12,5 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.test.ts"],
-  "lib": ["es2016"]
+  "exclude": ["node_modules", "**/*.test.ts"]
 }
