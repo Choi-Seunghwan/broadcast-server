@@ -1,5 +1,6 @@
+import { Room } from '@/types/types';
 class Live {
-  roomList: any[] = [];
+  roomList: Room[] = [];
 
   constructor() {}
 

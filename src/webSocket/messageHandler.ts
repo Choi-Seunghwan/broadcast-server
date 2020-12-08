@@ -1,51 +1,21 @@
-export default (server, socket) => {
-  // switch(socket){ // check message name and split
-  //   case
-  //     break
-  //    ... // room , account..
-  // }
+import accountHandler from './account/accountHandler';
+import liveHandler from './live/liveHandler';
 
-  const existingSocket = server.activeSockets.find((existingSocket) => existingSocket === socket.id);
+const messageHandler = (server, method, params) => {
+  const splitedMethod = method.split('/');
 
-  console.log('connected', socket.id);
-
-  if (!existingSocket) {
-    server.activeSockets.push(socket.id);
-    console.log('pushed', socket.id);
-
-    // socket.emit('update-user-list', {
-    //   users: server.activeSockets.filter((existingSocket) => existingSocket !== socket.id),
-    // });
-
-    // socket.broadcast.emit('update-user-list', {
-    //   users: [socket.id],
-    // });
+  switch (splitedMethod[0]) {
+    case 'live': {
+      liveHandler(server, splitedMethod, params);
+      break;
+    }
+    case 'account': {
+      accountHandler(server, splitedMethod, params);
+      break;
+    }
+    default: {
+    }
   }
-
-  socket.on('call-user', (data: any) => {
-    socket.to(data.to).emit('call-made', {
-      offer: data.offer,
-      socket: socket.id,
-    });
-  });
-
-  socket.on('make-answer', (data) => {
-    socket.to(data.to).emit('answer-made', {
-      socket: socket.id,
-      answer: data.answer,
-    });
-  });
-
-  // socket.on('reject-call', (data) => {
-  //   socket.to(data.from).emit('call-rejected', {
-  //     socket: socket.id,
-  //   });
-  // });
-
-  socket.on('disconnect', () => {
-    server.activeSockets = server.activeSockets.filter((existingSocket) => existingSocket !== socket.id);
-    socket.broadcast.emit('remove-user', {
-      socketId: socket.id,
-    });
-  });
 };
+
+export default messageHandler;

@@ -5,8 +5,8 @@ import cors from 'cors';
 import messageHandler from './webSocket/messageHandler';
 import api from './api';
 import middlewares from './api/middleware';
-import Live from '@/services/live';
-import Account from '@/services/account';
+import Live from '@/services/Live';
+import Account from '@/services/Account';
 
 export class Server {
   private httpServer: HTTPServer;
@@ -43,7 +43,9 @@ export class Server {
 
   private handleSocketConnection(): void {
     this.io.on('connection', (socket) => {
-      messageHandler(this, socket);
+      socket.on('message', (method, params) => {
+        messageHandler(this, method, params);
+      });
     });
   }
 
