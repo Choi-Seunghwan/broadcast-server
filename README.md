@@ -2,7 +2,7 @@
 
 라이브 방송 플랫폼 Server.
 
-(Frontend Ropo.)[https://github.com/Choi-Seunghwan/vivi-frontend]
+[Frontend Ropo.](https://github.com/Choi-Seunghwan/vivi-frontend)
 
 👨‍💻 개발 중 !
 
