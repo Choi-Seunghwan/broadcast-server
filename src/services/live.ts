@@ -12,6 +12,8 @@ class Live {
   }
 
   createTestDemoRoom() {
+    //call AccountInfo, to Account service
+
     const demoRoom1Creator: AccountInfo = { accountId: -1, nickname: 'Creator1' };
     const demoRoom1: Room = {
       roomId: 0,
@@ -27,6 +29,12 @@ class Live {
 
   getRoomList() {
     return Object.fromEntries(this.roomListMap);
+  }
+
+  createRoom() {}
+
+  startLive() {
+    console.log('live service startLive');
   }
 }
 

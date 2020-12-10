@@ -11,7 +11,7 @@ import Account from '@/services/Account';
 export class Server {
   private httpServer: HTTPServer;
   private app: Application;
-  private io: SocketIOServer;
+  public io: SocketIOServer;
   private readonly DEFAULT_PORT = 5000;
 
   private activeSockets: string[] = [];
@@ -43,10 +43,15 @@ export class Server {
 
   private handleWebSocket(): void {
     this.io.on('connection', (socket) => {
-      socket.on('message', (method, params) => {
-        messageHandler(this, method, params);
+      console.log('socket connected', socket.id);
+      socket.on('message', (method, args) => {
+        messageHandler(this, socket, method, args);
       });
     });
+  }
+
+  public replyMessage(socket, args): void {
+    socket.emit('replyMessage', args);
   }
 
   public connectLiveService(): Live {

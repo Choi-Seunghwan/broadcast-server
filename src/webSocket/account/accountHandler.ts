@@ -1,3 +1,3 @@
-const accountHandler = (server, method, params) => {};
+const accountHandler = (server, socket, method, args) => {};
 
 export default accountHandler;
