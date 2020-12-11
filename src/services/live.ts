@@ -31,7 +31,9 @@ class Live {
     return Object.fromEntries(this.roomListMap);
   }
 
-  createRoom() {}
+  createRoom() {
+    // peer description;
+  }
 
   startLive() {
     console.log('live service startLive');
