@@ -1,7 +1,8 @@
-// import { server } from '@/main.ts';
+import { server } from '@/main.ts';
 
 const login = async (req, res) => {
-  return res.json({ nickname: 'nickname', result: true });
+  const accountService = server.connectAccountService();
+  return res.json(accountService.createGuestAccountInfo());
 };
 
 export default {

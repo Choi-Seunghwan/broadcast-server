@@ -31,12 +31,30 @@ class Live {
     return Object.fromEntries(this.roomListMap);
   }
 
-  createRoom() {
-    // peer description;
+  startLive(roomInfo) {
+    console.log('live service startLive');
+    this.createRoom(roomInfo);
   }
 
-  startLive() {
-    console.log('live service startLive');
+  createRoom(roomInfo) {
+    /*
+    need DB search query
+    search last room id. create roomId 
+    */
+    const roomIdList = [...this.roomListMap.keys()].sort();
+    const roomId = roomIdList[roomIdList.length - 1] + 1;
+    const { title, creator, creatorPeer, creatorSocketId } = roomInfo;
+
+    const room: Room = {
+      roomId,
+      memberCount: 0,
+      title,
+      creator,
+      creatorPeer,
+      creatorSocketId,
+    };
+
+    this.roomListMap.set(roomId, room);
   }
 }
 
