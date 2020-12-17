@@ -3,7 +3,8 @@ const liveHandler = (server, socket, splitedMethod, args) => {
 
   switch (splitedMethod[1]) {
     case 'startLive': {
-      const result = liveService.startLive();
+      const roomInfo = args[0];
+      const result = liveService.startLive(roomInfo);
       server.replyMessage(socket, [splitedMethod, result]);
       break;
     }
