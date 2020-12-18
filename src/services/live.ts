@@ -11,22 +11,6 @@ class Live {
     this.roomListMap = new Map<number, Room>();
   }
 
-  createTestDemoRoom() {
-    //call AccountInfo, to Account service
-
-    const demoRoom1Creator: AccountInfo = { accountId: -1, nickname: 'Creator1' };
-    const demoRoom1: Room = {
-      roomId: 0,
-      memberCount: 1,
-      title: 'Demo Room 1',
-      creator: demoRoom1Creator,
-      creatorPeer: undefined,
-      creatorSocketId: undefined,
-    };
-
-    this.roomListMap.set(0, demoRoom1);
-  }
-
   getRoomList() {
     return Object.fromEntries(this.roomListMap);
   }
@@ -43,18 +27,41 @@ class Live {
     */
     const roomIdList = [...this.roomListMap.keys()].sort();
     const roomId = roomIdList[roomIdList.length - 1] + 1;
-    const { title, creator, creatorPeer, creatorSocketId } = roomInfo;
+    const { title, creator, localDescriptionOffer, creatorSocketId } = roomInfo;
 
     const room: Room = {
       roomId,
       memberCount: 0,
       title,
       creator,
-      creatorPeer,
+      localDescriptionOffer,
       creatorSocketId,
     };
 
     this.roomListMap.set(roomId, room);
+  }
+
+  enterRoom(roomId) {
+    const room: Room = this.roomListMap.get(roomId);
+    // add user, db
+    return room;
+  }
+
+  // temp
+  createTestDemoRoom() {
+    //call AccountInfo, to Account service
+
+    const demoRoom1Creator: AccountInfo = { accountId: -1, nickname: 'Creator1' };
+    const demoRoom1: Room = {
+      roomId: 0,
+      memberCount: 1,
+      title: 'Demo Room 1',
+      creator: demoRoom1Creator,
+      localDescriptionOffer: undefined,
+      creatorSocketId: undefined,
+    };
+
+    this.roomListMap.set(0, demoRoom1);
   }
 }
 

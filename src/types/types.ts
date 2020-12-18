@@ -3,7 +3,7 @@ export interface Room {
   memberCount: number;
   title: string;
   creator: AccountInfo;
-  creatorPeer;
+  localDescriptionOffer;
   creatorSocketId;
 }
 
