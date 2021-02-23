@@ -10,7 +10,7 @@ const liveHandler = (server, socket, splitedMethod, args) => {
       break;
     }
     case 'enterRoom': {
-      const roomId = args[0];
+      const { roomId } = args[0];
       const result = liveService.enterRoom(roomId);
       console.log(result);
       server.replyMessage(socket, [splitedMethod, result]);

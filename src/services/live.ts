@@ -34,7 +34,7 @@ class Live {
       memberCount: 0,
       title,
       creator,
-      localDescriptionOffer,
+      creatorDescriptionOffer: localDescriptionOffer,
       creatorSocketId,
     };
 
@@ -42,8 +42,13 @@ class Live {
   }
 
   enterRoom(roomId) {
+    // check guest or creator. return flag
+
     const room: Room = this.roomListMap.get(roomId);
+
     // add user, db
+    console.log(roomId, Number(roomId));
+    console.log(this.roomListMap.get(1), room);
     return room;
   }
 
@@ -57,7 +62,7 @@ class Live {
       memberCount: 1,
       title: 'Demo Room 1',
       creator: demoRoom1Creator,
-      localDescriptionOffer: undefined,
+      creatorDescriptionOffer: undefined,
       creatorSocketId: undefined,
     };
 
