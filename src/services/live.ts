@@ -20,6 +20,10 @@ class Live {
     this.createRoom(roomInfo);
   }
 
+  /**
+   *
+   * @param roomInfo
+   */
   createRoom(roomInfo) {
     /*
     need DB search query
