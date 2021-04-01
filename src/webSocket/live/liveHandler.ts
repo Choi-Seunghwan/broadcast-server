@@ -2,6 +2,10 @@ const liveHandler = (server, socket, splitedMethod, args) => {
   const liveService = server.connectLiveService();
 
   switch (splitedMethod[1]) {
+    case 'createLiveRoom': {
+      const roomInfo = args[0];
+    }
+
     case 'startLive': {
       const roomInfo = args[0];
       const creatorSocketId = socket.id;

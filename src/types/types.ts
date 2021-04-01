@@ -10,4 +10,10 @@ export interface Room {
 export interface AccountInfo {
   accountId: number;
   nickname: string;
+  connectionInfo?: ConnectionInfo;
+}
+
+export interface ConnectionInfo {
+  socket: any;
+  socketId: string;
 }

@@ -14,8 +14,6 @@ export class Server {
   public io: SocketIOServer;
   private readonly DEFAULT_PORT = 5000;
 
-  private activeSockets: string[] = [];
-
   private accountService: Account;
   private liveService: Live;
 
