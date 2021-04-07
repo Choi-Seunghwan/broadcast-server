@@ -2,9 +2,9 @@ import express, { Application } from 'express';
 import socketIO, { Server as SocketIOServer } from 'socket.io';
 import { createServer, Server as HTTPServer } from 'http';
 import cors from 'cors';
-import messageHandler from './webSocket/messageHandler';
 import api from './api';
 import middlewares from './api/middleware';
+import Client from './client';
 import Live from '@/services/Live';
 import Account from '@/services/Account';
 
@@ -13,13 +13,12 @@ export class Server {
   private app: Application;
   public io: SocketIOServer;
   private readonly DEFAULT_PORT = 5000;
-
+  private clientMap: Map<string, Client>;
   private accountService: Account;
   private liveService: Live;
 
   constructor() {
     this.initialize();
-
     this.handleAPI();
     this.handleWebSocket();
   }
@@ -28,6 +27,7 @@ export class Server {
     this.app = express();
     this.httpServer = createServer(this.app);
     this.io = socketIO(this.httpServer);
+    this.clientMap = new Map();
 
     this.accountService = new Account();
     this.liveService = new Live();
@@ -41,10 +41,10 @@ export class Server {
 
   private handleWebSocket(): void {
     this.io.on('connection', (socket) => {
-      console.log('socket connected', socket.id);
-      socket.on('message', (method, args) => {
-        messageHandler(this, socket, method, args);
-      });
+      const { id, handshake } = socket;
+
+      const client = new Client(id, handshake.address, this, socket);
+      this.clientMap.set(id, client);
     });
   }
 

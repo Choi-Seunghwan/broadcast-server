@@ -31,18 +31,17 @@ class Live {
     */
     const roomIdList = [...this.roomListMap.keys()].sort();
     const roomId = roomIdList[roomIdList.length - 1] + 1;
-    const { title, creator, localDescriptionOffer, creatorSocketId } = roomInfo;
+    const { title, localDescriptionOffer, creatorSocketId } = roomInfo;
 
-    const room: Room = {
-      roomId,
-      memberCount: 0,
-      title,
-      creator,
-      creatorDescriptionOffer: localDescriptionOffer,
-      creatorSocketId,
-    };
+    // const room: Room = {
+    //   roomId,
+    //   memberCount: 0,
+    //   title,
+    // creatorDescriptionOffer: localDescriptionOffer,
+    // creatorSocketId,
+    // };
 
-    this.roomListMap.set(roomId, room);
+    // this.roomListMap.set(roomId, room);
   }
 
   enterRoom(roomId) {

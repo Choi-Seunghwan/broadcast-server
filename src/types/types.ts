@@ -3,8 +3,8 @@ export interface Room {
   memberCount: number;
   title: string;
   creator: AccountInfo;
-  creatorDescriptionOffer;
-  creatorSocketId;
+  creatorDescriptionOffer?;
+  creatorSocketId?;
 }
 
 export interface AccountInfo {
