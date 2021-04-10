@@ -2,7 +2,7 @@ export interface Room {
   roomId: number;
   memberCount: number;
   title: string;
-  creator: AccountInfo;
+  accountId: string;
   creatorDescriptionOffer?;
   creatorSocketId?;
 }

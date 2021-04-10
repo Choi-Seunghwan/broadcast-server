@@ -17,31 +17,32 @@ class Live {
 
   startLive(roomInfo) {
     console.log('live service startLive');
-    this.createRoom(roomInfo);
   }
 
   /**
    *
    * @param roomInfo
    */
-  createRoom(roomInfo) {
+  createRoom(client, roomInfo) {
     /*
     need DB search query
     search last room id. create roomId 
     */
     const roomIdList = [...this.roomListMap.keys()].sort();
     const roomId = roomIdList[roomIdList.length - 1] + 1;
-    const { title, localDescriptionOffer, creatorSocketId } = roomInfo;
+    const { title, type, localDescriptionOffer, creatorSocketId } = roomInfo;
+    const { accountId } = client;
 
-    // const room: Room = {
-    //   roomId,
-    //   memberCount: 0,
-    //   title,
-    // creatorDescriptionOffer: localDescriptionOffer,
-    // creatorSocketId,
-    // };
+    const room: Room = {
+      roomId,
+      memberCount: 0,
+      title,
+      accountId,
+      // creatorDescriptionOffer: localDescriptionOffer,
+      // creatorSocketId,
+    };
 
-    // this.roomListMap.set(roomId, room);
+    this.roomListMap.set(roomId, room);
   }
 
   enterRoom(roomId) {
@@ -58,13 +59,11 @@ class Live {
   // temp
   createTestDemoRoom() {
     //call AccountInfo, to Account service
-
-    const demoRoom1Creator: AccountInfo = { accountId: -1, nickname: 'Creator1' };
     const demoRoom1: Room = {
       roomId: 0,
       memberCount: 1,
       title: 'Demo Room 1',
-      creator: demoRoom1Creator,
+      accountId: '-1',
       creatorDescriptionOffer: undefined,
       creatorSocketId: undefined,
     };

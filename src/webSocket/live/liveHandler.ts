@@ -1,9 +1,13 @@
-const liveHandler = (server, socket, splitedMethod, args) => {
+import { AccountInfo } from '@/types/types';
+
+const liveHandler = (client, server, socket, splitedMethod, args) => {
   const liveService = server.connectLiveService();
 
   switch (splitedMethod[1]) {
-    case 'createLiveRoom': {
-      const roomInfo = args[0];
+    case 'createRoom': {
+      const roomInfo = args;
+      const result = liveService.createRoom(client, args);
+      break;
     }
 
     case 'startLive': {

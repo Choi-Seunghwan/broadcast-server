@@ -18,8 +18,8 @@ export default class Client {
   }
 
   private handleSocketMessage(): void {
-    this.socket.on('message', (method, args) => {
-      messageHandler(this.server, this.socket, method, args);
+    this.socket.on('message', (method: string[], args) => {
+      messageHandler(this, this.server, this.socket, method, args);
     });
   }
 }
