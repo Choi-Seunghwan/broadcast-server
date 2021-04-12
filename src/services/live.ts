@@ -15,19 +15,10 @@ class Live {
     return Object.fromEntries(this.roomListMap);
   }
 
-  startLive(roomInfo) {
-    console.log('live service startLive');
-  }
-
   /**
-   *
-   * @param roomInfo
+   * @param roomInfo - {title, type, }
    */
   createRoom(client, roomInfo) {
-    /*
-    need DB search query
-    search last room id. create roomId 
-    */
     const roomIdList = [...this.roomListMap.keys()].sort();
     const roomId = roomIdList[roomIdList.length - 1] + 1;
     const { title, type, localDescriptionOffer, creatorSocketId } = roomInfo;
@@ -43,20 +34,21 @@ class Live {
     };
 
     this.roomListMap.set(roomId, room);
+    return roomId;
   }
 
-  enterRoom(roomId) {
-    // check guest or creator. return flag
+  startLive(roomInfo) {
+    console.log('live service startLive');
+  }
 
+  joinRoom(roomId) {
     const room: Room = this.roomListMap.get(roomId);
 
-    // add user, db
-    console.log(roomId, Number(roomId));
-    console.log(this.roomListMap.get(1), room);
     return room;
   }
 
-  // temp
+  leaveRoom(client, roomId) {}
+
   createTestDemoRoom() {
     //call AccountInfo, to Account service
     const demoRoom1: Room = {
