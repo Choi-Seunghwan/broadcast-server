@@ -29,6 +29,7 @@ class Live {
       memberCount: 0,
       title,
       accountId,
+      channelName: `liveRoom-${roomId}`,
       // creatorDescriptionOffer: localDescriptionOffer,
       // creatorSocketId,
     };
@@ -43,7 +44,9 @@ class Live {
 
   joinRoom(roomId) {
     const room: Room = this.roomListMap.get(roomId);
+    const { channelName } = room;
 
+    room.memberCount += 1;
     return room;
   }
 
@@ -56,6 +59,7 @@ class Live {
       memberCount: 1,
       title: 'Demo Room 1',
       accountId: '-1',
+      channelName: 'liveRoom-0',
       creatorDescriptionOffer: undefined,
       creatorSocketId: undefined,
     };

@@ -3,6 +3,7 @@ export interface Room {
   memberCount: number;
   title: string;
   accountId: string;
+  channelName: string;
   creatorDescriptionOffer?;
   creatorSocketId?;
 }
