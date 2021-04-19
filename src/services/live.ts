@@ -42,16 +42,13 @@ class Live {
     console.log('live service startLive');
   }
 
-  joinRoom(roomId) {
+  joinRoom(client, roomId) {
     const room: Room = this.roomListMap.get(roomId);
     const { channelName } = room;
 
     room.memberCount += 1;
     return room;
   }
-
-  leaveRoom(client, roomId) {}
-
   createTestDemoRoom() {
     //call AccountInfo, to Account service
     const demoRoom1: Room = {

@@ -19,8 +19,8 @@ const liveHandler = (client, server, socket, splitedMethod, args) => {
     //   break;
     // }
     case 'joinRoom': {
-      const { roomId } = args[0];
-      const result = liveService.joinRoom(roomId);
+      const { roomId } = args;
+      const result = liveService.joinRoom(client, roomId);
       server.replyMessage(socket, { message: splitedMethod, result });
       break;
     }
