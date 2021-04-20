@@ -46,9 +46,15 @@ class Live {
     const room: Room = this.roomListMap.get(roomId);
     const { channelName } = room;
 
+    const { socket: clientSocket } = client;
+    clientSocket.join(channelName);
+
     room.memberCount += 1;
     return room;
   }
+
+  sendChatMessage(client, rooomId) {}
+
   createTestDemoRoom() {
     //call AccountInfo, to Account service
     const demoRoom1: Room = {
