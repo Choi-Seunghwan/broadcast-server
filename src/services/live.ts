@@ -1,6 +1,6 @@
 import { Room, AccountInfo } from '@/types/types';
 class Live {
-  private roomListMap: Map<number, Room>;
+  private roomListMap: Map<string, Room>;
 
   constructor() {
     this.init();
@@ -8,16 +8,13 @@ class Live {
   }
 
   init() {
-    this.roomListMap = new Map<number, Room>();
+    this.roomListMap = new Map<string, Room>();
   }
 
   getRoomList() {
     return Object.fromEntries(this.roomListMap);
   }
 
-  /**
-   * @param roomInfo - {title, type, }
-   */
   createRoom(client, roomInfo) {
     const roomIdList = [...this.roomListMap.keys()].sort();
     const roomId = roomIdList[roomIdList.length - 1] + 1;
@@ -42,7 +39,7 @@ class Live {
     console.log('live service startLive');
   }
 
-  joinRoom(client, roomId) {
+  joinRoom(client, roomId: string) {
     const room: Room = this.roomListMap.get(roomId);
     const { channelName } = room;
 
@@ -53,12 +50,18 @@ class Live {
     return room;
   }
 
-  sendChatMessage(client, rooomId) {}
+  sendChatMessage(client, roomId: string, message) {
+    const room: Room = this.roomListMap.get(roomId);
+    const { channelName } = room;
+
+    const { socket: clientSocket } = client;
+    clientSocket.to(channelName).emit('chat/receiveChatMessage', message);
+  }
 
   createTestDemoRoom() {
     //call AccountInfo, to Account service
     const demoRoom1: Room = {
-      roomId: 0,
+      roomId: '0',
       memberCount: 1,
       title: 'Demo Room 1',
       accountId: '-1',
@@ -67,7 +70,7 @@ class Live {
       creatorSocketId: undefined,
     };
 
-    this.roomListMap.set(0, demoRoom1);
+    this.roomListMap.set('0', demoRoom1);
   }
 }
 

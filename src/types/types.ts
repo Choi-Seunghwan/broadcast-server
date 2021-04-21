@@ -1,5 +1,5 @@
 export interface Room {
-  roomId: number;
+  roomId: string;
   memberCount: number;
   title: string;
   accountId: string;

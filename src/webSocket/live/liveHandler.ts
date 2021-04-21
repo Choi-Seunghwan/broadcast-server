@@ -24,6 +24,12 @@ const liveHandler = (client, server, socket, splitedMethod, args) => {
       server.replyMessage(socket, { message: splitedMethod, result });
       break;
     }
+    case 'sendChatMessage': {
+      const { roomId, message } = args;
+      const result = liveService.sendChatMessage(client, roomId, message);
+      server.replyMessage(socket, { message: splitedMethod, result });
+      break;
+    }
     case 'live': {
       break;
     }
