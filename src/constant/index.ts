@@ -1,0 +1,1 @@
+export const ERROR_TYPE_DEFAULT = 'ERROR_TYPE_DEFAULT';

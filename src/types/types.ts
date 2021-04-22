@@ -18,3 +18,8 @@ export interface ConnectionInfo {
   socket: any;
   socketId: string;
 }
+
+export interface ErrorInfo {
+  type: string;
+  message: string;
+}

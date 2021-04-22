@@ -1,4 +1,6 @@
-import { Room, AccountInfo } from '@/types/types';
+import { Room, AccountInfo, ErrorInfo } from '@/types/types';
+import { ERROR_TYPE_DEFAULT } from '@/constant';
+
 class Live {
   private roomListMap: Map<string, Room>;
 
@@ -52,6 +54,11 @@ class Live {
 
   sendChatMessage(client, roomId: string, message) {
     const room: Room = this.roomListMap.get(roomId);
+    if (!room) {
+      const err: ErrorInfo = { type: ERROR_TYPE_DEFAULT, message: '' };
+      return err;
+    }
+
     const { channelName } = room;
 
     const { socket: clientSocket } = client;

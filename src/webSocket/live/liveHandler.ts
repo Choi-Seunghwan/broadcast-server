@@ -2,7 +2,7 @@ import { AccountInfo } from '@/types/types';
 
 const liveHandler = (client, server, socket, splitedMethod, args) => {
   const liveService = server.connectLiveService();
-
+  let result;
   switch (splitedMethod[1]) {
     case 'createRoom': {
       const roomInfo = args;
@@ -20,13 +20,13 @@ const liveHandler = (client, server, socket, splitedMethod, args) => {
     // }
     case 'joinRoom': {
       const { roomId } = args;
-      const result = liveService.joinRoom(client, roomId);
+      result = liveService.joinRoom(client, roomId);
       server.replyMessage(socket, { message: splitedMethod, result });
       break;
     }
     case 'sendChatMessage': {
       const { roomId, message } = args;
-      const result = liveService.sendChatMessage(client, roomId, message);
+      result = liveService.sendChatMessage(client, roomId, message);
       server.replyMessage(socket, { message: splitedMethod, result });
       break;
     }
