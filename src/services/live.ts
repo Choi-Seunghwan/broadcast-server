@@ -67,17 +67,20 @@ class Live {
 
   createTestDemoRoom() {
     //call AccountInfo, to Account service
-    const demoRoom1: Room = {
-      roomId: '0',
-      memberCount: 1,
-      title: 'Demo Room 1',
-      accountId: '-1',
-      channelName: 'liveRoom-0',
-      creatorDescriptionOffer: undefined,
-      creatorSocketId: undefined,
-    };
 
-    this.roomListMap.set('0', demoRoom1);
+    for (let i = 0; i < 12; i++) {
+      const demoRoom1: Room = {
+        roomId: `${i}`,
+        memberCount: 1,
+        title: `Demo Room ${i}`,
+        accountId: '-1',
+        channelName: `liveRoom-${i}`,
+        creatorDescriptionOffer: undefined,
+        creatorSocketId: undefined,
+      };
+
+      this.roomListMap.set(`${i}`, demoRoom1);
+    }
   }
 }
 
