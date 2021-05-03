@@ -5,7 +5,6 @@ const allowCrossDomain = (res) => {
 };
 
 const middleware = (req, res, next) => {
-  console.log('middleware');
   allowCrossDomain(res);
   next();
 };

@@ -49,7 +49,7 @@ class Live {
     clientSocket.join(channelName);
 
     room.memberCount += 1;
-    return room;
+    return { room };
   }
 
   sendChatMessage(client, roomId: string, message) {
@@ -62,7 +62,8 @@ class Live {
     const { channelName } = room;
 
     const { socket: clientSocket } = client;
-    clientSocket.to(channelName).emit('chat/receiveChatMessage', message);
+    const a = clientSocket.to(channelName);
+    clientSocket.to(channelName).emit('replyMessage', message);
   }
 
   createTestDemoRoom() {
