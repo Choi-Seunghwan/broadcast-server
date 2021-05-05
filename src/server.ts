@@ -7,6 +7,7 @@ import middlewares from './api/middleware';
 import Client from './client';
 import Live from '@/services/Live';
 import Account from '@/services/Account';
+import { SocketReplyMessage } from '@/types';
 
 export class Server {
   private httpServer: HTTPServer;
@@ -48,8 +49,8 @@ export class Server {
     });
   }
 
-  public replyMessage(socket, args): void {
-    socket.emit('replyMessage', args);
+  public replyMessage(socket, replyMessage: SocketReplyMessage): void {
+    socket.emit('replyMessage', replyMessage);
   }
 
   public connectLiveService(): Live {

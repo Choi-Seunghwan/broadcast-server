@@ -1,4 +1,4 @@
-import { Room, AccountInfo, ErrorInfo } from '@/types/types';
+import { Room, AccountInfo, ServiceResultRes } from '@/types';
 import { ERROR_TYPE_DEFAULT } from '@/constant';
 
 class Live {
@@ -53,17 +53,18 @@ class Live {
   }
 
   sendChatMessage(client, roomId: string, message) {
+    const res: ServiceResultRes = { errorCode: '', message: '', result: {} };
     const room: Room = this.roomListMap.get(roomId);
+
     if (!room) {
-      const err: ErrorInfo = { type: ERROR_TYPE_DEFAULT, message: '' };
-      return err;
+      res.errorCode = ERROR_TYPE_DEFAULT;
+      return res;
     }
 
     const { channelName } = room;
-
-    const { socket: clientSocket } = client;
-    const a = clientSocket.to(channelName);
-    clientSocket.to(channelName).emit('replyMessage', message);
+    const result = { channelName };
+    res.result = result;
+    return res;
   }
 
   createTestDemoRoom() {

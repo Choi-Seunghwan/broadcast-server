@@ -19,7 +19,13 @@ export interface ConnectionInfo {
   socketId: string;
 }
 
-export interface ErrorInfo {
-  type: string;
+export interface SocketReplyMessage {
   message: string;
+  errorCode: string;
+  result: any;
+}
+export interface ServiceResultRes {
+  message: string;
+  errorCode: string;
+  result: any;
 }
