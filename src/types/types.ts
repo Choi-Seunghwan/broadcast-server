@@ -20,12 +20,12 @@ export interface ConnectionInfo {
 }
 
 export interface SocketReplyMessage {
-  message: string;
+  method: string;
   errorCode: string;
   result: any;
 }
 export interface ServiceResultRes {
-  message: string;
+  description: string;
   errorCode: string;
   result: any;
 }

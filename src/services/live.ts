@@ -52,8 +52,8 @@ class Live {
     return { room };
   }
 
-  sendChatMessage(client, roomId: string, message) {
-    const res: ServiceResultRes = { errorCode: '', message: '', result: {} };
+  sendChatMessage(client, roomId: string, message): ServiceResultRes {
+    const res: ServiceResultRes = { errorCode: '', description: '', result: {} };
     const room: Room = this.roomListMap.get(roomId);
 
     if (!room) {
@@ -62,7 +62,8 @@ class Live {
     }
 
     const { channelName } = room;
-    const result = { channelName };
+    const result = { channelName, chatMessage: message };
+
     res.result = result;
     return res;
   }

@@ -1,4 +1,4 @@
-import { AccountInfo, ServiceResultRes } from '@/types/types';
+import { AccountInfo, SocketReplyMessage, ServiceResultRes } from '@/types/types';
 
 const liveHandler = (client, server, socket, splitedMethod, args) => {
   const liveService = server.connectLiveService();
@@ -25,13 +25,19 @@ const liveHandler = (client, server, socket, splitedMethod, args) => {
       break;
     }
     case 'sendChatMessage': {
-      const { roomId, message } = args;
-      const result: ServiceResultRes = liveService.sendChatMessage(client, roomId, message);
-      server.replyMessage(socket, result);
+      const { roomId, method } = args;
+      const serviceResult: ServiceResultRes = liveService.sendChatMessage(client, roomId, method);
+      const { result, errorCode } = serviceResult;
+      const replyMessage: SocketReplyMessage = { method, result, errorCode };
 
-      const { channelName } = result.result;
+      server.replyMessage(socket, replyMessage);
+
+      const { channelName } = serviceResult.result;
       const { socket: clientSocket } = client;
-      clientSocket.to(channelName).emit('replyMessage', message);
+      const chatReceiveMethod = 'chat/receiveChatMethod';
+      const channelSocketReplyMessage: SocketReplyMessage = { method: chatReceiveMethod, errorCode, result };
+
+      clientSocket.to(channelName).emit('replyMessage', channelSocketReplyMessage);
       break;
     }
     case 'live': {
