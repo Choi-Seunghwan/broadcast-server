@@ -25,16 +25,16 @@ const liveHandler = (client, server, socket, splitedMethod, args) => {
       break;
     }
     case 'sendChatMessage': {
-      const { roomId, method } = args;
-      const serviceResult: ServiceResultRes = liveService.sendChatMessage(client, roomId, method);
+      const { roomId, chatMessage } = args;
+      const serviceResult: ServiceResultRes = liveService.sendChatMessage(client, roomId, chatMessage);
       const { result, errorCode } = serviceResult;
-      const replyMessage: SocketReplyMessage = { method, result, errorCode };
+      const replyMessage: SocketReplyMessage = { method: splitedMethod, result, errorCode };
 
       server.replyMessage(socket, replyMessage);
 
       const { channelName } = serviceResult.result;
       const { socket: clientSocket } = client;
-      const chatReceiveMethod = 'chat/receiveChatMethod';
+      const chatReceiveMethod = ['chat', 'receiveChatMethod'];
       const channelSocketReplyMessage: SocketReplyMessage = { method: chatReceiveMethod, errorCode, result };
 
       clientSocket.to(channelName).emit('replyMessage', channelSocketReplyMessage);
