@@ -42,14 +42,24 @@ class Live {
   }
 
   joinRoom(client, roomId: string) {
+    const res: ServiceResultRes = { errorCode: '', description: '', result: {} };
     const room: Room = this.roomListMap.get(roomId);
+
+    if (!room) {
+      res.errorCode = ERROR_TYPE_DEFAULT;
+      return res;
+    }
+
     const { channelName } = room;
-
     const { socket: clientSocket } = client;
-    clientSocket.join(channelName);
 
+    clientSocket.join(channelName);
     room.memberCount += 1;
-    return { room };
+
+    const result = { room };
+    res.result = result;
+
+    return res;
   }
 
   sendChatMessage(client, roomId: string, message): ServiceResultRes {

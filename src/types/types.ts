@@ -19,7 +19,7 @@ export interface ConnectionInfo {
 }
 
 export interface SocketReplyMessage {
-  method: Array<string>;
+  method: string;
   errorCode: string;
   result: any;
 }

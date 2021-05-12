@@ -6,11 +6,11 @@ const messageHandler = (client, server, socket, method, args) => {
 
   switch (splitedMethod[0]) {
     case 'live': {
-      liveHandler(client, server, socket, splitedMethod, args);
+      liveHandler(client, server, socket, method, args);
       break;
     }
     case 'account': {
-      accountHandler(client, server, socket, splitedMethod, args);
+      accountHandler(client, server, socket, method, args);
       break;
     }
     default: {

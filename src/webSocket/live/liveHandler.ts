@@ -1,8 +1,9 @@
 import { AccountInfo, SocketReplyMessage, ServiceResultRes } from '@/types/types';
 
-const liveHandler = (client, server, socket, splitedMethod, args) => {
+const liveHandler = (client, server, socket, method, args) => {
   const liveService = server.connectLiveService();
-  let result;
+  const splitedMethod = method.split('/');
+
   switch (splitedMethod[1]) {
     case 'createRoom': {
       const roomInfo = args;
@@ -20,21 +21,26 @@ const liveHandler = (client, server, socket, splitedMethod, args) => {
     // }
     case 'joinRoom': {
       const { roomId } = args;
-      result = liveService.joinRoom(client, roomId);
-      server.replyMessage(socket, { message: splitedMethod, result });
+      const serviceResult: ServiceResultRes = liveService.joinRoom(client, roomId);
+      const { result, errorCode } = serviceResult;
+      const replyMessage: SocketReplyMessage = { method, result, errorCode };
+
+      server.replyMessage(socket, replyMessage);
       break;
     }
     case 'sendChatMessage': {
-      const { roomId, chatMessage } = args;
-      const serviceResult: ServiceResultRes = liveService.sendChatMessage(client, roomId, chatMessage);
+      const { roomId, message } = args;
+      const serviceResult: ServiceResultRes = liveService.sendChatMessage(client, roomId, message);
       const { result, errorCode } = serviceResult;
-      const replyMessage: SocketReplyMessage = { method: splitedMethod, result, errorCode };
+      const replyMessage: SocketReplyMessage = { method, result, errorCode };
 
       server.replyMessage(socket, replyMessage);
 
+      if (errorCode) return;
+
       const { channelName } = serviceResult.result;
       const { socket: clientSocket } = client;
-      const chatReceiveMethod = ['chat', 'receiveChatMethod'];
+      const chatReceiveMethod = 'chat/receiveChatMessage';
       const channelSocketReplyMessage: SocketReplyMessage = { method: chatReceiveMethod, errorCode, result };
 
       clientSocket.to(channelName).emit('replyMessage', channelSocketReplyMessage);
