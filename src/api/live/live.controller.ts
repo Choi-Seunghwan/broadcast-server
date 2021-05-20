@@ -1,10 +1,11 @@
-import { server } from '@/main.ts';
+import { server } from '@/main';
+import { ServiceResultRes } from '@/utils/types';
 
 const getRoomList = async (req, res) => {
   const liveService = server.connectLiveService();
-  const roomList = liveService.getRoomList();
+  const serviceResult: ServiceResultRes = await liveService.getRoomList();
 
-  return res.json({ roomList: roomList });
+  return res.json(serviceResult);
 };
 
 export default {

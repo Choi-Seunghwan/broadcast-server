@@ -1,14 +1,17 @@
-import { AccountInfo, SocketReplyMessage, ServiceResultRes } from '@/types/types';
+import { AccountInfo, SocketReplyMessage, ServiceResultRes } from '@/utils/types';
 
-const liveHandler = (client, server, socket, method, args) => {
+const liveHandler = async (client, server, socket, method, args) => {
   const liveService = server.connectLiveService();
   const splitedMethod = method.split('/');
 
   switch (splitedMethod[1]) {
     case 'createRoom': {
       const roomInfo = args;
-      const result = liveService.createRoom(client, args);
-      server.replyMessage(socket, { message: splitedMethod, result });
+      const serviceResult: ServiceResultRes = await liveService.createRoom(client, args);
+      const { result, errorCode } = serviceResult;
+      const replyMessage: SocketReplyMessage = { method, result, errorCode };
+
+      server.replyMessage(socket, replyMessage);
       break;
     }
 
@@ -21,7 +24,7 @@ const liveHandler = (client, server, socket, method, args) => {
     // }
     case 'joinRoom': {
       const { roomId } = args;
-      const serviceResult: ServiceResultRes = liveService.joinRoom(client, roomId);
+      const serviceResult: ServiceResultRes = await liveService.joinRoom(client, roomId);
       const { result, errorCode } = serviceResult;
       const replyMessage: SocketReplyMessage = { method, result, errorCode };
 
@@ -30,7 +33,7 @@ const liveHandler = (client, server, socket, method, args) => {
     }
     case 'sendChatMessage': {
       const { roomId, message } = args;
-      const serviceResult: ServiceResultRes = liveService.sendChatMessage(client, roomId, message);
+      const serviceResult: ServiceResultRes = await liveService.sendChatMessage(client, roomId, message);
       const { result, errorCode } = serviceResult;
       const replyMessage: SocketReplyMessage = { method, result, errorCode };
 

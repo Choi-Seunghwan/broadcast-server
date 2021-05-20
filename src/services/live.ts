@@ -1,6 +1,6 @@
-import { Room, AccountInfo, ServiceResultRes } from '@/types';
+import { Room, AccountInfo, ServiceResultRes } from '@/utils/types';
 import { ERROR_TYPE_DEFAULT } from '@/constant';
-
+// import sleep from '@/utils/sleep';
 class Live {
   private roomListMap: Map<string, Room>;
 
@@ -13,8 +13,12 @@ class Live {
     this.roomListMap = new Map<string, Room>();
   }
 
-  getRoomList() {
-    return Object.fromEntries(this.roomListMap);
+  async getRoomList(): Promise<ServiceResultRes> {
+    const res: ServiceResultRes = { errorCode: '', description: '', result: {} };
+    const roomList = Object.fromEntries(this.roomListMap);
+
+    res.result = { roomList };
+    return res;
   }
 
   createRoom(client, roomInfo) {

@@ -7,7 +7,7 @@ import middlewares from './api/middleware';
 import Client from './client';
 import Live from '@/services/Live';
 import Account from '@/services/Account';
-import { SocketReplyMessage } from '@/types';
+import { SocketReplyMessage } from '@/utils/types';
 
 export class Server {
   private httpServer: HTTPServer;

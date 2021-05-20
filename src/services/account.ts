@@ -1,4 +1,4 @@
-import { AccountInfo } from '@/types/types';
+import { AccountInfo } from '@/utils/types';
 
 class Account {
   constructor() {}
