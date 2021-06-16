@@ -1,0 +1,8 @@
+{
+  "local": {
+    "username": "root",
+    "password": null,
+    "dialect": "sqlite",
+    "storage": "src/db/database.sqlite"
+  }
+}
