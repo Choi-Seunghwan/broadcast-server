@@ -85,7 +85,7 @@ class Live {
   createTestDemoRoom() {
     //call AccountInfo, to Account service
 
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 5; i++) {
       const demoRoom1: Room = {
         roomId: `${i}`,
         memberCount: 1,

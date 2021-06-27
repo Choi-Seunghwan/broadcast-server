@@ -3,6 +3,9 @@
     "username": "root",
     "password": null,
     "dialect": "sqlite",
-    "storage": "src/db/database.sqlite"
+    "storage": "src/db/database.sqlite",
+    "define": {
+      "freezeTableName": true
+    }
   }
 }

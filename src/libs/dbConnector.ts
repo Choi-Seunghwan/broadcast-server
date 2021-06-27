@@ -21,7 +21,7 @@ class DbConnector {
 
         this.initModel();
       } catch (e) {
-        Logger.debug('@@@ catch', e);
+        Logger.debug('dbConnector init error catch', e);
       }
     };
     // if (process.env.NODE_ENV === 'local') {
@@ -30,11 +30,11 @@ class DbConnector {
     this.sequelizeInstance = new Sequelize(dbConfig[process.env.NODE_ENV]);
     connectionCheck();
 
-    Logger.debug('@@ dbConnector init end');
+    Logger.debug('dbConnector init end');
   }
 
   async initModel() {
-    const initAccountModel = () => {
+    const initAccountModel = async () => {
       this.accountModel = sq.define(SEQ_MODEL_ACCOUNT, {
         id: {
           type: DataTypes.INTEGER,
@@ -58,6 +58,8 @@ class DbConnector {
           allowNull: false,
         },
       });
+
+      const adminUser = await this.accountModel.create({ id: 0, nickname: 'admin', password: '1234' });
     };
 
     const sq = this.sq();
