@@ -6,8 +6,8 @@ import api from './api';
 import middlewares from './api/middleware';
 import Client from './client';
 import Live from '@/services/Live';
-import Account from '@/services/Account';
-import DbConnector from '@/libs/dbConnector';
+import _Account, { Account } from '@/services/account';
+import _DbConnector, { DbConnector } from '@/libs/dbConnector';
 import { SocketReplyMessage } from '@/utils/types';
 
 export class Server {
@@ -30,14 +30,15 @@ export class Server {
     this.app = express();
     this.httpServer = createServer(this.app);
     this.io = socketIO(this.httpServer);
-    this.dbConnector = new DbConnector();
+    this.dbConnector = _DbConnector;
     this.clientMap = new Map();
-    this.accountService = new Account();
+    this.accountService = _Account;
     this.liveService = new Live();
   }
 
   private handleAPI(): void {
     this.app.use(cors());
+    this.app.use(express.json());
     this.app.use('/', middlewares);
     this.app.use('/api', api);
   }

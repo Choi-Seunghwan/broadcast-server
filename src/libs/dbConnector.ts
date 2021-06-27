@@ -6,7 +6,7 @@ const dbConfig = require('@/db/dbConfig.json');
 
 const SEQ_MODEL_ACCOUNT = 'account';
 
-class DbConnector {
+export class DbConnector {
   private sequelizeInstance;
   private accountModel;
 
@@ -17,9 +17,8 @@ class DbConnector {
   async init() {
     const connectionCheck = async () => {
       try {
-        this.sequelizeInstance.authenticate();
-
-        this.initModel();
+        await this.sequelizeInstance.authenticate();
+        await this.initModel();
       } catch (e) {
         Logger.debug('dbConnector init error catch', e);
       }
@@ -28,17 +27,25 @@ class DbConnector {
     //   //
     // }
     this.sequelizeInstance = new Sequelize(dbConfig[process.env.NODE_ENV]);
-    connectionCheck();
+    await connectionCheck();
 
     Logger.debug('dbConnector init end');
   }
 
   async initModel() {
-    const initAccountModel = async () => {
-      this.accountModel = sq.define(SEQ_MODEL_ACCOUNT, {
+    const sq = this.sq();
+
+    if (!sq) return;
+    this.accountModel = await sq.define(
+      SEQ_MODEL_ACCOUNT,
+      {
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
+          autoIncrement: true,
+        },
+        username: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
         nickname: {
@@ -49,26 +56,23 @@ class DbConnector {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        createDateTime: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        updateDateTime: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-      });
-
-      const adminUser = await this.accountModel.create({ id: 0, nickname: 'admin', password: '1234' });
-    };
-
-    const sq = this.sq();
-    initAccountModel();
+      },
+      {
+        freezeTableName: true,
+        timestamps: true,
+      }
+    );
+    await sq.sync({ force: true });
+    const adminUser = await this.accountModel.create({ username: 'admin', nickname: 'testAdmin', password: '1234' });
   }
 
   sq() {
-    return this.sequelizeInstance;
+    if (this.sequelizeInstance) return this.sequelizeInstance;
+  }
+
+  getAccountModel() {
+    if (this.accountModel) return this.accountModel;
   }
 }
 
-export default DbConnector;
+export default new DbConnector();
