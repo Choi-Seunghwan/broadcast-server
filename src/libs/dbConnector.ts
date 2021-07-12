@@ -1,4 +1,5 @@
 import Logger from '@/utils/logger';
+import CryptoModule from '@/libs/CryptoModule';
 
 const Sequelize = require('sequelize');
 const { DataTypes } = require('sequelize');
@@ -63,7 +64,9 @@ export class DbConnector {
       }
     );
     await sq.sync({ force: true });
-    const adminUser = await this.accountModel.create({ username: 'admin', nickname: 'testAdmin', password: '1234' });
+
+    const pwHash = await CryptoModule.encryption('1234');
+    const adminUser = await this.accountModel.create({ username: 'admin', nickname: 'testAdmin', password: pwHash });
   }
 
   sq() {

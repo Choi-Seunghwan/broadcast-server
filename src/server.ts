@@ -7,7 +7,7 @@ import middlewares from './api/middleware';
 import Client from './client';
 import Live from '@/services/Live';
 import _Account, { Account } from '@/services/account';
-import _DbConnector, { DbConnector } from '@/libs/dbConnector';
+import _DbConnector, { DbConnector } from '@/libs/DbConnector';
 import { SocketReplyMessage } from '@/utils/types';
 
 export class Server {

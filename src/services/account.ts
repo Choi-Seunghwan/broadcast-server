@@ -1,5 +1,6 @@
 import { AccountInfo, ServiceResultRes } from '@/utils/types';
-import DbConnector from '@/libs/dbConnector';
+import DbConnector from '@/libs/DbConnector';
+import CryptoModule from '@/libs/CryptoModule';
 import _get from 'lodash/get';
 
 export class Account {
@@ -7,10 +8,15 @@ export class Account {
 
   async login({ username, password }): Promise<ServiceResultRes> {
     const res: ServiceResultRes = { errorCode: '', description: '', result: {} };
-    const accountModel = DbConnector.getAccountModel();
-    const account = await accountModel.findOne({ where: { username, password } });
+    const pwHash = await CryptoModule.encryption(password);
 
-    if (!account) {
+    const accountModel = DbConnector.getAccountModel();
+    const account = await accountModel.findOne({ where: { username } });
+    const { password: accountPwHash } = account;
+
+    const isMatched = await CryptoModule.check(password, accountPwHash);
+
+    if (!isMatched) {
       res.errorCode = 'LOGIN_FAIL';
       return res;
     }
