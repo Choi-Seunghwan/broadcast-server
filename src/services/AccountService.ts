@@ -40,10 +40,11 @@ export class AccountService {
       return res;
     }
 
+    const token = await AuthModule.sign();
     const nickname: string = _get(findedAccount, 'nickname', '');
     const account: Account = { username, nickname };
 
-    res.makeSuccess({ result: account, statusCode: LOGIN_SUCCESS });
+    res.makeSuccess({ result: { account, token }, statusCode: LOGIN_SUCCESS });
     return res;
   }
 
@@ -54,4 +55,4 @@ export class AccountService {
   // }
 }
 
-export default new Account();
+export default new AccountService();

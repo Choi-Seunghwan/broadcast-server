@@ -1,6 +1,10 @@
 {
-  "jwtKey": "localJwtKey",
-  "tokenOptions": {
-    "test": "test"
+  "jwt": {
+    "key": "localJwtKey",
+    "tokenOptions": {
+      "algorithm": "HS256",
+      "expiresIn": "1h",
+      "issuer": "VIVI-SERVER-DEV"
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { JWT_KEY } from '@/env';
+import { JWT } from '@/env';
 import logger from '@/utils/logger';
 const jwt = require('jsonwebtoken');
 
@@ -6,28 +6,29 @@ export class AuthModule {
   private options: Object;
 
   constructor() {
-    logger.debug('@@', JWT_KEY);
-
     this.init();
   }
 
   init() {
-    logger.debug('@@', JWT_KEY);
+    const { options } = JWT;
+    this.setOptions(options);
   }
 
   setOptions(options) {
     this.options = options;
   }
 
-  async sign(payload, options, cb) {
-    // const result = jwt.sign(payload, JWT_KEY, options);
+  async sign(payload = {}, options = null, cb = null) {
+    const { key: secrectKey } = JWT;
+    const result = jwt.sign(payload, secrectKey, options || this.options);
 
     if (cb) cb();
-    // return result;
+    return result;
   }
 
   async verify(token) {
-    jwt.verify();
+    const isVerified = jwt.verify(token);
+    return isVerified;
   }
 }
 
