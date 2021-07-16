@@ -1,4 +1,4 @@
-import { AccountInfo, SocketReplyMessage, ServiceResultRes } from '@/utils/types';
+import { Account, SocketReplyMessage, ServiceResultRes } from '@/utils/types';
 
 const liveHandler = async (client, server, socket, method, args) => {
   const liveService = server.connectLiveService();

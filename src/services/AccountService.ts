@@ -1,6 +1,6 @@
 import _get from 'lodash/get';
 import { Account, ServiceResultRes } from '@/utils/types';
-import { SIGNIN_SUCCESS, SIGNIN_FAIL, LOGIN_SUCCESS, LOGIN_FAIL } from '@/utils/constatns';
+import { SIGNIN_SUCCESS, SIGNIN_FAIL, LOGIN_SUCCESS, LOGIN_FAIL } from '@/utils/constants';
 import DbConnector from '@/libs/DbConnector';
 import CryptoModule from '@/libs/CryptoModule';
 import AuthModule from '@/libs/AuthModule';
