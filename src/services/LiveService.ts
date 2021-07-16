@@ -1,7 +1,6 @@
-import { Room, AccountInfo, ServiceResultRes } from '@/utils/types';
-import { DEFAULT_ERROR } from '@/utils/constatns';
-// import sleep from '@/utils/sleep';
-class Live {
+import { Room, Account, ServiceResultRes } from '@/utils/types';
+
+export class LiveService {
   private roomListMap: Map<string, Room>;
 
   constructor() {
@@ -100,4 +99,4 @@ class Live {
   }
 }
 
-export default Live;
+export default new LiveService();

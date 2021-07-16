@@ -5,8 +5,8 @@ import cors from 'cors';
 import api from './api';
 import middlewares from './api/middleware';
 import Client from './client';
-import Live from '@/services/Live';
-import _Account, { Account } from '@/services/account';
+import _LiveService, { LiveService } from '@/services/LiveService';
+import _AccountService, { AccountService } from '@/services/AccountService';
 import _DbConnector, { DbConnector } from '@/libs/DbConnector';
 import { SocketReplyMessage } from '@/utils/types';
 import logger from '@/utils/logger';
@@ -17,8 +17,8 @@ export class Server {
   public io: SocketIOServer;
   private readonly DEFAULT_PORT = 5000;
   private clientMap: Map<string, Client>;
-  private accountService: Account;
-  private liveService: Live;
+  private accountService: AccountService;
+  private liveService: LiveService;
   private dbConnector: DbConnector;
 
   constructor() {
@@ -33,8 +33,8 @@ export class Server {
     this.io = socketIO(this.httpServer);
     this.dbConnector = _DbConnector;
     this.clientMap = new Map();
-    this.accountService = _Account;
-    this.liveService = new Live();
+    this.accountService = _AccountService;
+    this.liveService = _LiveService;
   }
 
   private handleAPI(): void {
@@ -57,11 +57,11 @@ export class Server {
     socket.emit('replyMessage', replyMessage);
   }
 
-  public connectLiveService(): Live {
+  public connectLiveService(): LiveService {
     return this.liveService;
   }
 
-  public connectAccountService(): Account {
+  public connectAccountService(): AccountService {
     return this.accountService;
   }
 

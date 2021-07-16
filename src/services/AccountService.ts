@@ -1,11 +1,11 @@
 import _get from 'lodash/get';
-import { AccountInfo, ServiceResultRes } from '@/utils/types';
+import { Account, ServiceResultRes } from '@/utils/types';
 import { SIGNIN_SUCCESS, SIGNIN_FAIL, LOGIN_SUCCESS, LOGIN_FAIL } from '@/utils/constatns';
 import DbConnector from '@/libs/DbConnector';
 import CryptoModule from '@/libs/CryptoModule';
 import AuthModule from '@/libs/AuthModule';
 
-export class Account {
+export class AccountService {
   constructor() {
     AuthModule.init();
   }
@@ -30,8 +30,8 @@ export class Account {
   async login({ username, password }): Promise<ServiceResultRes> {
     const res = new ServiceResultRes();
     const accountModel = DbConnector.getAccountModel();
-    const account = await accountModel.findOne({ where: { username } });
-    const { password: accountPwHash } = account;
+    const findedAccount = await accountModel.findOne({ where: { username } });
+    const { password: accountPwHash } = findedAccount;
 
     const isMatched = await CryptoModule.check(password, accountPwHash);
 
@@ -40,10 +40,10 @@ export class Account {
       return res;
     }
 
-    const nickname: string = _get(account, 'nickname', '');
-    const accountInfo: AccountInfo = { username, nickname };
+    const nickname: string = _get(findedAccount, 'nickname', '');
+    const account: Account = { username, nickname };
 
-    res.makeSuccess({ result: accountInfo, statusCode: LOGIN_SUCCESS });
+    res.makeSuccess({ result: account, statusCode: LOGIN_SUCCESS });
     return res;
   }
 
