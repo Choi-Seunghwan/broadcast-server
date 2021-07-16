@@ -1,5 +1,5 @@
 import { Room, AccountInfo, ServiceResultRes } from '@/utils/types';
-import { ERROR_TYPE_DEFAULT } from '@/constant';
+import { DEFAULT_ERROR } from '@/utils/constatns';
 // import sleep from '@/utils/sleep';
 class Live {
   private roomListMap: Map<string, Room>;
@@ -14,10 +14,10 @@ class Live {
   }
 
   async getRoomList(): Promise<ServiceResultRes> {
-    const res: ServiceResultRes = { errorCode: '', description: '', result: {} };
+    const res = new ServiceResultRes();
     const roomList = Object.fromEntries(this.roomListMap);
 
-    res.result = { roomList };
+    res.makeSuccess({ result: roomList });
     return res;
   }
 
@@ -46,11 +46,11 @@ class Live {
   }
 
   joinRoom(client, roomId: string) {
-    const res: ServiceResultRes = { errorCode: '', description: '', result: {} };
+    const res = new ServiceResultRes();
     const room: Room = this.roomListMap.get(roomId);
 
     if (!room) {
-      res.errorCode = ERROR_TYPE_DEFAULT;
+      res.makeError();
       return res;
     }
 
@@ -61,24 +61,23 @@ class Live {
     room.memberCount += 1;
 
     const result = { room };
-    res.result = result;
-
+    res.makeSuccess({ result });
     return res;
   }
 
   sendChatMessage(client, roomId: string, message): ServiceResultRes {
-    const res: ServiceResultRes = { errorCode: '', description: '', result: {} };
+    const res = new ServiceResultRes();
     const room: Room = this.roomListMap.get(roomId);
 
     if (!room) {
-      res.errorCode = ERROR_TYPE_DEFAULT;
+      res.makeError();
       return res;
     }
 
     const { channelName } = room;
     const result = { channelName, chatMessage: message };
 
-    res.result = result;
+    res.makeSuccess({ result });
     return res;
   }
 

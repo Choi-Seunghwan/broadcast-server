@@ -3,6 +3,7 @@
     "username": "root",
     "password": null,
     "dialect": "sqlite",
+    "logging": false,
     "storage": "src/db/database.sqlite",
     "define": {
       "freezeTableName": true

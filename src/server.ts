@@ -9,6 +9,7 @@ import Live from '@/services/Live';
 import _Account, { Account } from '@/services/account';
 import _DbConnector, { DbConnector } from '@/libs/DbConnector';
 import { SocketReplyMessage } from '@/utils/types';
+import logger from '@/utils/logger';
 
 export class Server {
   private httpServer: HTTPServer;

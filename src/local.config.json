@@ -1,0 +1,6 @@
+{
+  "jwtKey": "localJwtKey",
+  "tokenOptions": {
+    "test": "test"
+  }
+}
